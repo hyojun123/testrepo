@@ -1,10 +1,8 @@
 module.exports = function(app) {
     app.get('/', function(req, res) {
-        console.log("get /");
-        res.render('index.html');
+        res.render('index/index.html');
     });
-    app.get('/about', function(req, res) {
-        console.log("get /about");
-        res.render('about.html');
+    app.get('/boards', function(req, res) {
+        res.render('board/main.html');
     });
 }
