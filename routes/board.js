@@ -25,8 +25,11 @@ router.post('/', function(req, res) {
 
 router.get('/:idx', function (req, res) {
     getBoardDetail(req, res);
-})
+});
 
+router.put('/:idx', function (req ,res) {
+    console.log(req.params.idx);
+})
 function insertBoards(req, res) {
     var title = req.body.title;
     var writer = req.body.writer;
