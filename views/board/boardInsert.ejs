@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <% include ../common/common-head.ejs%>
+  <body>
+    <% include ../common/common-nav.ejs%>
+
+    <!--BODY 내용 들어가야됨-->
+    <div class="container">
+      <form action="/boards" method="post" id="boardFrm">
+        <div class="form-group">
+          <label for="title">제목</label>
+          <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요">
+        </div>
+        <div class="form-group">
+          <label for="writer">작성자</label>
+          <input type="text" class="form-control" id="writer" name="writer" placeholder="작성자를 입력하세요">
+        </div>
+        <div class="form-group">
+          <label for="writer">내용</label>
+          <textarea class="form-control" rows="3" name="content" id="content" placeholder="내용을 입력하세요"></textarea>
+        </div>
+      </form>
+
+      <button class="btn btn-default" id="submitBtn">전송</button>
+    </div>
+    <!--페이지 별 스크립트-->
+    <script src="/javascripts/board.js"></script>
+    <script>
+      $(document).ready(function() {
+          board.insert.init();
+      })
+    </script>
+  </body>
+</html>
