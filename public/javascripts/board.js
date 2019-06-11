@@ -35,5 +35,30 @@ const board = {
         frmSubmit : function () {
             $("#boardFrm").submit();
         }
+    },
+    view : {
+        init : function () {
+            board.view.bind();
+        },
+        bind : function () {
+            $("#updateBoardBtn").off().on('click', function () {
+                if(confirm('수정 하시겠습니까?')) {
+                    var idx = $("#updateBoardBtn").data('idx');
+                    location.href='/boards/update/'+idx;
+                }
+            });
+        }
+    },
+    update : {
+        init : function () {
+            board.update.bind();
+        },
+        bind : function () {
+            $("#submitBtn").off().on('click', function () {
+                if(board.insert.nullChk()) {
+                    board.insert.frmSubmit();
+                }
+            });
+        }
     }
 }

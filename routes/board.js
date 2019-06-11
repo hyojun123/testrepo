@@ -12,6 +12,7 @@ var connection = mysql.createConnection({
 
 
 router.get('/', function(req, res, next) {
+
     getBoards(req, res);
 });
 
@@ -27,9 +28,15 @@ router.get('/:idx', function (req, res) {
     getBoardDetail(req, res);
 });
 
+router.get('/update/:idx', function (req, res) {
+
+    getBoardDetail(req, res);
+});
+
 router.put('/:idx', function (req ,res) {
     console.log(req.params.idx);
-})
+});
+
 function insertBoards(req, res) {
     var title = req.body.title;
     var writer = req.body.writer;
@@ -61,7 +68,8 @@ function getBoards(req, res) {
         `select idx,
                 title,
                 content,
-                date_format(createdAt,'%Y-%m-%d %h:%m') createdAt
+                date_format(createdAt,'%Y-%m-%d %h:%m') createdAt,
+                hits
            from Boards
           order by createdAt desc 
                 `;
@@ -71,6 +79,7 @@ function getBoards(req, res) {
 }
 
 function getBoardDetail(req, res) {
+    var path = req.route.path;
     var idx = req.params.idx;
     var updateHit =
         `UPDATE Boards
@@ -88,16 +97,23 @@ function getBoardDetail(req, res) {
          FROM Boards 
           WHERE idx = '${idx}' 
         `
-    console.log('updateHit : ' + updateHit);
-    console.log('getQuery : ' + getQuery);
-    connection.query(updateHit,{},function(err, rows) {
-        if(err) throw err;
-        connection.query(getQuery,{}, function (err, rows) {
-           if(err) throw err;
+    if(path.indexOf('update') === -1) {
+        connection.query(updateHit,{},function(err, rows) {
+            if(err) throw err;
+            connection.query(getQuery,{}, function (err, rows) {
+                if(err) throw err;
 
-           res.render('board/boardDetailView.ejs', {board : rows[0]});
+                res.render('board/boardDetailView.ejs', {board : rows[0]});
+            });
         });
-    })
+    } else {
+        connection.query(getQuery,{}, function (err, rows) {
+            if(err) throw err;
+
+            res.render('board/boardUpdate.ejs', {board : rows[0]});
+        });
+    }
+
 }
 
 module.exports = router;

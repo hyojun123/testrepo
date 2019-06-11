@@ -30,8 +30,14 @@
           <td><%=board.hits%></td>
         </tr>
       </table>
-      <button class="btn btn-default" id="updateBoardBtn">글 수정</button>
-      <button class="btn btn-default" id="deleteBoardBtn">글 삭제</button>
+      <button class="btn btn-default" data-idx="<%=board.idx%>" id="updateBoardBtn">글 수정</button>
+      <button class="btn btn-default" data-idx="<%=board.idx%>" id="deleteBoardBtn">글 삭제</button>
     </div>
+    <script src="/javascripts/board.js"></script>
+    <script>
+      $(document).ready(function() {
+          board.view.init();
+      })
+    </script>
   </body>
 </html>
